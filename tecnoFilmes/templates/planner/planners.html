@@ -1,0 +1,177 @@
+{%extends 'base.html'%}
+{% block content %}
+
+<style>
+    .padd {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        padding-left: 7px;
+    }
+
+    div.borda {
+        border-radius: 8px; 
+        box-shadow: 0px 0px 5px rgba(0,0,0,.5); 
+        border-left: solid 4px #52C0D9;
+    }
+
+    div.borda_orng {
+        border-radius: 8px; 
+        box-shadow: 0px 0px 5px rgba(0,0,0,.5); 
+        border-left: solid 4px #F2B33D;
+    }
+    
+    div.borda_green {
+        border-radius: 8px; 
+        box-shadow: 0px 0px 5px rgba(0,0,0,.5); 
+        border-left: solid 4px #57D952;
+    }
+
+    @media (min-width: 768px) {
+        .modal-xl {
+            width: 100%;
+            max-width:1200px;
+        }
+    }
+
+    a.pl{text-decoration: none;color: #fff}
+
+    .customPagination, .paginacaoCursor{
+			margin: 5px;
+			padding: 5px 8px;
+			color: #fff;
+			background: #60BBAC;
+            cursor: pointer;
+            border-radius: 10px;
+		}
+</style>
+
+<div class="container">
+    <div class="row" style="margin-top: 25px;"> 
+        <div class="col-xl">
+            <div class="row" style="margin-bottom: 25px;">
+                <div class="col-7">
+                    <h1 class="text_grey">Minhas Atividades</h1> 
+                </div>
+                <div class="col-4">
+                    <p class="text_label" style="margin-left: 28px;">Legenda</p>
+                </div>
+                <div class="col-1">
+                    <a href="/comercial" style="margin-left: 50px;">
+                        <img style="width: 25px; color: #5FBBAC;" src="../../static/icons/de-volta.png" title="Voltar">
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-7">
+                    <p class="text_label">Filtro</p>
+                </div>
+                <div style="margin-left: 40px; margin-top: -20px;">
+                    <img style="width: 25px;" src="../../static/icons/atvdia.png">
+                </div>
+                <div class="col-2" style="margin-top: -20px;">
+                    <p class="text_label">Atividades do dia</p>
+                </div>
+                <div style="margin-top: -20px;">
+                    <img style="width: 25px;" src="../../static/icons/emprod.png">                 
+                </div>
+                <div class="col-2" style="margin-top: -20px;">
+                    <p class="text_label">Em produção</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-7">
+                    <img id="at-dia" style="width: 30px; cursor: pointer;" src="../../static/icons/atvdia.png">
+                    <img id="pro-dias" style="width: 30px; cursor: pointer;" src="../../static/icons/pro5dias.png">                      
+                    <img id="em-prod" style="width: 30px; cursor: pointer;" src="../../static/icons/emprod.png">  
+                </div>
+                <div style="margin-left: 40px; margin-top: -20px;">
+                    <img style="width: 25px;" src="../../static/icons/pro5dias.png">
+                </div>
+                <div class="col-2" style="margin-top: -20px;">
+                    <p class="text_label">Próximos 5 dias</p>
+                </div>
+            </div>
+            
+            <div class="row container" style="margin:55px 0 0 -30px;">
+                <div class="col-sm-4 sugestao paginationTable">
+                    <p class="text_label contador" data-conta="{{cont}}">Sugestão ()</p>
+
+                {% for cliente in clientesCincoDias %}
+                    <div class="borda_orng cont-orng-sugestao tableItem" style="cursor: pointer;">
+                        <a href="/detalhes/{{cliente[0]}}" class="pl">
+                            <p class="text_label padd">{{cliente[1]}}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+
+                {% for cliente in listaSugPedidos %}
+                    <div class="borda_orng cont-orng-sugestao tableItem" style="cursor: pointer;">
+                        <a href="/detalhes/{{cliente[0]}}" class="pl">
+                            <p class="text_label padd">{{cliente[1]}}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+
+                <!-- {% for cliente in atividadeDia %}
+                    <div class="borda tableItem cont-sugestao" style="cursor: pointer;">
+                        <a href="/detalhes/{{cliente[2]}}" class="pl">
+                            <p class="text_label padd">{{cliente[1]}}</p>
+                        </a>
+                    </div>
+                {% endfor %} -->
+
+                {% for cliente in clientes %}
+                    <div class="borda tableItem cont-sugestao" style="cursor: pointer;">
+                        <a href="/detalhes/{{cliente[0]}}" class="pl">
+                            <p class="text_label padd">{{cliente[1]}}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+                <div id="pagination-container" class="esconde">
+                    <p class="paginacaoCursor" id="beforePagination"> < </p>
+                    <p class="paginacaoCursor" id="afterPagination"> > </p>
+                </div>
+                </div>                
+
+                <div class="col-sm-4 em-atendimento paginationTableAt" style="border-left: solid 1px rgb(190, 186, 186);">
+                    <p class="text_label contador-b" data-conta="{{contA}}">Em Atendimento ()</p>
+
+                    {% for cliente in clienteEmAtendimentoCinco %}
+                    <div class="borda_orng cont-orng-atendimento tableItemAt">
+                        <a href="/detalhes/{{cliente[0]}}" class="pl">
+                            <p class="text_label padd">{{cliente[1]}}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+
+                    {% for cliente in clientesAt %}
+                    <div class="borda tableItemAt">
+                        <a href="/detalhes/{{cliente[0]}}" class="pl">
+                            <p class="text_label padd">{{cliente[1]}}</p>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    <div id="pagination-container-at" class="escondeAt">
+                        <p class="paginacaoCursorAt" id="beforePaginationAt"> < </p>
+                        <p class="paginacaoCursorAt" id="afterPaginationAt"> > </p>
+                    </div>
+
+                </div>
+                <div class="col-sm-4 hide-prod" style="border-left: solid 1px rgb(190, 186, 186);">
+                    <p class="text_label">Em Produção (1)</p>
+                    <div class="borda_green">
+                        <p class="text_label padd"> Cliente X (Exemplo)</p>
+                    </div>
+                </div>                  
+            </div>           
+        </div>        
+    </div>
+</div>
+
+<div >
+    <hr style="border: 3px solid #5FBBAC; margin-top: 40px;">
+</div>
+<script src="../../static/Javascript/controller/planner.js"></script>
+
+{% endblock %}

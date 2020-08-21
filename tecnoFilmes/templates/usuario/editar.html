@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+{% block content %}
+<p class="text_grey">Cadastro de Usuários</p>
+{% for mess in get_flashed_messages()  %}
+    <div class="alert alert-danger" role="alert">
+        {{mess}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endfor %}
+<form method="POST" action="/salvar_edicao" >
+    <input type="hidden" name="id" value="{{usuario.id}}">
+
+    <div class="col-md-12" style="text-align: right;">
+        <div class="form-group">
+            <label class="text_label" for="is_ativo">Ativo</label>
+            <input type="checkbox" name="is_ativo" checked="true" value="{{usuario.is_ativo}}">      
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                <label class="text_label" for="nome">Nome:</label>
+                <input type="text" name="nome" class="form-control" value="{{usuario.nome}}">
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                <label class="text_label" for="nome">CPF:</label>
+                <input type="text" name="cpf" class="form-control" id="Cpf" value="{{usuario.cpf}}">
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                <label class="text_label" for="email">Email:</label>
+                <input type="text" name="email" class="form-control" value="{{usuario.email}}">
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                <label class="text_label" for="celular">Celular:</label>
+                <input type="text" name="celular" class="form-control" id="Celular" value="{{usuario.celular}}">
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                <label class="text_label" for="telefone">Telefone:</label>
+                <input type="text" name="telefone" class="form-control" id="Telefone" value="{{usuario.telefone}}">
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                <label class="text_label" for="login">Login:</label>
+                <input type="text" name="login" class="form-control" value="{{usuario.login}}">
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                <label class="text_label" for="password">Senha:</label>
+                <input type="password" name="password" class="form-control" value="{{usuario.password}}">
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                <label class="text_label" for="pass_confirm">Confirmar Senha:</label>
+                <input type="password" name="pass_confirm" class="form-control" value="{{usuario.pass_confirm}}">
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="radio" id="diretoria" name="tp_usuario" value="diretoria">
+                <label class="text_label" for="diretoria">Diretoria</label>
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="radio" id="comercial" name="tp_usuario" value="comercial">
+                <label class="text_label" for="comercial">Comercial</label>
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="radio" id="pcp" name="tp_usuario" value="pcp">
+                <label class="text_label" for="pcp">PCP</label>
+            </div>
+        </div>
+    
+        <div class="col-md-3"></div>
+    
+        <div class="col-md-3" style="margin-top: 20px; margin-left: -15px;">
+            <a style="margin-left: 900px; margin-bottom: -48px;" class="btn btn_estilo" href="/usuario">CANCELAR</a>
+            <button type="submit" class="btn btn_estilo">EDITAR</button>
+        </div>
+    </div>
+</form>
+<script>
+    $('#Cpf').mask('000.000.000-00');
+    $('#Celular').mask('(99)99999-9999');
+    $('#Telefone').mask('(99)9999-9999');
+</script>
+
+{% endblock %}

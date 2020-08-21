@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+.box {
+
+    position: absolute;
+    top: 10%;
+    left: 37%;
+    width: 360px;
+    padding: 50px;
+    border-radius: 75px;
+    box-shadow: 0px 0px 5px rgba(0,0,0,.8);
+
+}
+
+.box img{
+
+    margin: 0 0 40px -20px;
+    padding: 0;
+    text-align: center;
+
+}
+
+.box .inputBox{
+
+    position: relative;
+
+}
+
+.box .inputBox input{
+
+    width: 100%;
+    padding: 10px 0;
+    border-radius: 10px;
+    font-size: 15px;
+
+}
+
+.box .inputBox label{
+
+    margin-top: 10px;
+    color: #606060;
+    font-weight: bold;
+    font-size: 17px;
+
+}
+
+.btn_login{
+
+    background: #5FBBAC;
+    color: #fff;
+    margin: 15px 0 30px 150px;
+
+}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    a {
+        position: relative;
+    }
+
+    .descricao {
+        position: absolute;
+        color: #DDD; 
+        left: 20px;
+        top: -90px
+    }
+
+    .position a{
+        text-decoration: none;
+    }
+</style>
+
+<p class="text_grey">Home - Comercial</p>
+<div >
+    <hr style="border: 3px solid #5FBBAC;">
+</div>
+<div class="position">
+    <a href="#">
+        <img class="img_home" src="../static/imagens/Dashboard.jpg">
+        <p class="descricao">Dashboard</p>
+    </a>
+    <a href="{{url_for('planners.planners')}}">
+        <img class="img_home" src="../static/imagens/minhasatividades.jpg">
+        <p class="descricao" style="top: 90px;">Minhas Atividades</p>
+    </a>
+    <a href="#">
+        <img class="img_home" src="../static/imagens/parametros.jpg">
+        <p class="descricao">Parâmetros e Configurações</p>
+    </a>
+</div>
+     
+
+{% endblock %}

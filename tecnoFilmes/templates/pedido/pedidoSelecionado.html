@@ -1,0 +1,93 @@
+{% block content %}
+
+<style>
+    .barra_rolagem {
+
+        overflow: auto;
+        height: 310px; 
+        width: 100%;
+
+    }
+</style>
+
+    <div class="row" style="margin-top: 75px;">          
+        <div class="col-md-12"></div>
+        <div>
+            <h1 style="margin-left: 15px; margin-top: -20px; margin-bottom: 30px;" class="text_grey">Agrupamento de Pedidos por Material</h1>   
+        </div> 
+
+        <div class="container" style="margin-left: 15px; margin-top: 25px;">
+
+            <div class="">
+                <label class="text_label" for="">Pesquisa</label>
+                <input style="width: 240px;" class="inputBox" type="text" id="txtMaterial" name="txtMaterial" placeholder="Digite o nome do material:">        
+                <button type="button" onclick="agrupaPedido()" class="btn btn_estilo" style="margin-left: 5px; margin-top: -5px;">Buscar</button>
+            </div>
+        </div>            
+
+        <div class="col-md-12"></div>
+        
+        <div class="col-md-12" id="pedAgrupado" style="display: none;"></div>
+
+    </div>
+
+    <script>
+
+        function agrupaPedido() {
+            var material = document.getElementById("txtMaterial").value;
+            //alert(encodeURIComponent(material));
+            material = encodeURIComponent(material)
+            $.ajax({                          
+                url: "pedidoAgrupado/" + material,
+                type: "GET",
+                beforeSend: function(){
+                    $("body").load('load',{
+                        divClass: 'ring',
+                        divQtd: 4
+                    });
+                },
+                success: function(html) {
+                    $("#pedAgrupado").html(html).css("display", "");                    
+                },
+                complete: function(){
+                    $("body").load("unload");
+                }
+                
+            });
+
+        }
+
+        /*function getMaterial(){
+            alert($("#filtro button.clicked").text().trim())
+        }*/
+
+        function filtraMaterial() {
+            var material = document.getElementById("txtMaterial").value;
+            //alert(encodeURIComponent(material));
+            material = encodeURIComponent(material)
+            $.ajax({                          
+                url: "pedidoAgrupado/" + material,
+                type: "GET",
+                beforeSend: function(){
+                    $("body").load('load',{
+                        divClass: 'ring',
+                        divQtd: 4
+                    });
+                },
+                success: function(html) {
+                    $("#pedAgrupado").html(html).css("display", "");                    
+                },
+                complete: function(){
+                    $("body").load("unload");
+                }
+                
+            });
+
+        }
+        $(function() {
+
+        });
+    </script>
+
+
+{% endblock %} 

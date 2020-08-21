@@ -1,0 +1,36 @@
+{% block content %}
+
+<link rel="stylesheet" href="../static/css/imagens.css">
+<link rel="stylesheet" href="../static/css/login.css">
+<link rel="stylesheet" href="../static/css/estilo.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+
+<div class="box">
+    <img src="../static/imagens/logoTecFilme.jpg" style="width: 300px;">
+
+    {% for mess in get_flashed_messages()  %}
+    <div class="alert alert-danger" role="alert">
+        {{mess}}
+    </div>
+    {% endfor %}
+
+    <form method="POST">
+        {{form.hidden_tag()}}
+        <div class="inputBox">
+            {{form.login.label}}
+            {{form.login(required="")}}
+        </div>
+        <div class="inputBox">            
+            {{form.password.label}}
+            {{form.password(required="")}}<br>
+        </div>
+
+        {{form.submit(class='btn btn-lg btn_login', onclick="CampoVazio()")}}
+        <a style="color: #5FBBAC; font-weight: bold; margin-left: 180px;" href="{{url_for('users.cadastrar')}}">Cadastrar</a>
+    </form>
+</div>
+
+{% endblock %}

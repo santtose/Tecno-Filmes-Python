@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    a {
+        position: relative;
+    }
+
+    .descricao {
+        position: absolute;
+        color: #DDD; 
+        left: 20px;
+        top: -90px
+    }
+
+    .position a{
+        text-decoration: none;
+    }
+</style>
+
+<p class="text_grey">Home - Diretoria</p>
+<div >
+    <hr style="border: 3px solid #5FBBAC;">
+</div>
+<div class="position">
+    <a href="#">
+        <img class="img_home" src="../static/imagens/gerenciamento.jpg">
+        <p class="descricao">Gerenciamento</p>
+    </a>
+    <a href="#">
+        <img class="img_home" src="../static/imagens/lingaproducao.jpg">
+        <p class="descricao" style="top: 90px;">Linha de Produção</p>
+    </a>
+    <a href="{{url_for('users.usuario')}}">
+        <img class="img_home" src="../static/imagens/usuarios.png">
+        <p class="descricao">Usuários</p>
+    </a>
+</div>     
+
+{% endblock %}

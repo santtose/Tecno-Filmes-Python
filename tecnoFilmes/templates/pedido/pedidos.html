@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+
+    .barra_rolagem {
+
+        overflow: auto;
+        height: 310px; 
+        width: 100%;
+
+    }
+
+</style>
+<div class="container">
+    <div class="row" style="margin-top: 25px;">  
+        <div class="col-xl">
+            <div class="row" style="margin-bottom: 20px;">
+                <div class="col-11">
+                    <h1 class="text_grey">Pedidos e Produção</h1>
+                </div>
+                 <div class="col-1">
+                    <a href="/pcp" style="margin-left: 50px;">
+                        <img style="width: 25px; color: #5FBBAC;" src="../../static/icons/de-volta.png" title="Voltar">
+                    </a>
+                 </div>              
+            </div>
+            
+            <div class="col-12"></div>
+    
+            <form>
+                <div class="row">
+                    <div class="col-12">
+                        <label class="text_label" for="">Pesquisa</label>
+                        <input class="inputBox" id="txtMaterial" type="text" name="consulta" placeholder="Digite o nome do material:"  style="width: 240px;" >        
+                        <button type="button" class="btn btn_estilo" onclick="agrupaPedido()" style="margin-left: 5px; margin-top: -5px;">Buscar</button>
+                    </div>            
+                </div>
+            </form>             
+        
+            <div style="margin-top: 20px;" class="col-md-12"></div>  
+           
+            <div class="row">
+                <div class="col-md-12 barra_rolagem">
+                    <table class="table table-striped tabela">
+                        <thead class="lista_usuario">
+                            <tr class="text_format">
+                                <th>Cliente</th>
+                                <th>OP</th>
+                                <th>MAQ</th>
+                                <th>Largura</th>
+                                <th>Comprimento</th>
+                                <th>Material</th>
+                                <th>Data Embarque</th>                    
+                            </tr>
+                        </thead>
+                
+                        <tbody>
+                            {% for pedido in pedidos %}
+                            <tr>
+                                <td>{{pedido.cliente}}</td>
+                                <td>{{pedido.op}}</td>
+                                <td>{{pedido.maquina}}</td>
+                                <td>{{pedido.largura}}</td>
+                                <td>{{pedido.comprimento}}</td>
+                                <td>{{pedido.material}}</td>
+                                <td>{{pedido.data_embarque.strftime('%d/%m/%Y')}}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>       
+                </div>
+            </div>           
+            
+            <div class="row">
+                <div class="col-md-12" id="pedAgrupado"></div>
+            </div>
+            
+        </div>
+        
+    </div>
+</div>
+    
+
+<script>
+    function agrupaPedido() {
+        var material = document.getElementById("txtMaterial").value;
+        //alert(encodeURIComponent(material));
+        material = encodeURIComponent(material)
+        
+        $.ajax({                          
+            url: "pedidoAgrupado/" + material,
+            type: "GET",
+            beforeSend: function(){
+                $("body").load('load',{
+                    divClass: 'ring',
+                    divQtd: 4
+                });
+            },
+            success: function(html) {
+                $("#pedAgrupado").html(html).css("display", "");                    
+            },
+            complete: function(){
+                $("body").load("unload");
+            }
+            
+        });
+
+    }                
+</script>
+
+{% endblock %}

@@ -1,0 +1,101 @@
+{% block content %}
+
+<style>
+    .barra_rolagem {
+
+        overflow: auto;
+        height: 310px; 
+        width: 100%;
+
+    }
+
+    @media (min-width: 768px) {
+        .modal-xl {
+            width: 100%;
+            max-width:1200px;
+        }
+    }
+</style>
+
+<div class="container" style="margin-top: 55px; margin-bottom: 40px;">
+    <div class="row">
+        <div class="col-xl">
+            <div class="row">
+                <h1 style="margin: 20px 0 30px 15px;" class="text_grey">Pedidos Agrupados</h1>
+                <div class="col-md-12 ">             
+                    <table class="table table-striped tabela " id="lista_pedidos">
+                        <thead class="lista_usuario" >
+                            <tr class="text_format">
+                                <th>Pack</th>
+                                <th>BESTSOL</th>
+                                <th>OP</th>
+                                <th>LARGURA PED</th>
+                                <th>LARGURA EST</th>
+                                <th>COMP</th>
+                                <th>METROS</th>
+                                <th>SALDO</th>   
+                                <th>REFILE</th>   
+                                <th>COD BARRA</th>                         
+                            </tr>
+                        </thead>
+                
+                        <tbody style="cursor: pointer;">
+                            {% for row in agrupados %}
+                            <tr>
+                                <td>{{row['PACK']}}</td>
+                                <td>{{row['BESTSOL']}}</td>
+                                <td>{{row['OP']}}</td>
+                                <td>{{row['LARGURA']}}</td>
+                                <td>{{row['LARGESTOQUE']}}</td>
+                                <td>{{row['COMPRIMENTO']}}</td>
+                                <td>{{row['METROSESTOQUE']}}</td>
+                                <td>{{row['SALDO']}}</td>
+                                <td>{{row['REFILE']}}</td>
+                                <td>{{row['CODBARRA']}}</td>
+                                <td>                
+                                    <a href="javascript:;" onclick="detalheAgrupamento({{row['largura_estoque']}},{{row['ped1']}},{{row['ped2']}},{{row['ped3']}},{{row['ped4']}},{{row['ped5']}})">
+                                    <img style="width: 25px;" src="../static/icons/edit.png" title="Editar">
+                                </a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
+        </div>        
+    </div>
+</div>
+
+<div class="col-md-12"></div>
+
+    
+<div class="col-md-12" id="detalheAgrupamento" style="display: none;"></div>
+
+
+<script>
+    function detalheAgrupamento(largura_estoque, ped1, ped2, ped3, ped4, ped5) {
+        alert(encodeURIComponent(largura_estoque));
+        largura_estoque = encodeURIComponent(largura_estoque)
+        $.ajax({                          
+            url: "detalheAgrupamento/" + largura_estoque + "/" + ped1 + "/" + ped2 + "/" + ped3 + "/" + ped4 + "/" + ped5,
+            type: "GET",
+            beforeSend: function(){
+                $("body").load('load',{
+                    divClass: 'ring',
+                    divQtd: 4
+                });
+            },
+            success: function(html) {
+                $("#detalheAgrupamento").html(html).css("display", "");                    
+            },
+            complete: function(){
+                $("body").load("unload");
+            }
+            
+        });
+
+    }
+</script>
+
+
+{% endblock %}

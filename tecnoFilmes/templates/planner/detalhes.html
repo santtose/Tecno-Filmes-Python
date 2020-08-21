@@ -1,0 +1,282 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+    a.tl{text-decoration: none;color: #fff}
+
+    .text_grey_detalhes h1, h2{
+
+        color: #606060;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 25px;
+
+    }
+
+    .text_grey_detalhes h2{
+
+        color: #606060;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 20px;
+
+    }
+
+    .text_filtro p {
+        color: #606060;
+        font-weight: 600;
+        font-size: 15px;
+    }
+
+    .linha_vertical_filtro {
+        border-right: 2px solid #DCDCDC; 
+        height: 63px; 
+        position: absolute; 
+        margin-left: 29px;
+    }
+
+    .modal p {
+        color: #606060;
+        font-weight: bold;
+        text-decoration: none;
+        font-size: 20px;
+    }
+
+    .modal .borda-input {
+        border-color: #606060;
+    }
+
+    .modal .row {
+        margin-left: 15px;
+    }
+
+    .modal .modal-content {
+        margin-top: 10%;
+    }
+
+    .modal h1 {
+        margin: 15px 0 30px 15px;
+    }
+</style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xl">
+            <div class="row">
+                <div class="col-8">
+                    <h1 style="margin-left: -15px;" class="text_grey">{{cliente.nome.lower().capitalize()}}</h1>
+                </div>
+                <div class="col-3" style="margin-top: 20px;">
+                    <button style="margin-left: 200px; margin-bottom: -48px;" type="button" class="btn btn_estilo" data-toggle="modal" data-target=".bd-example-modal-lg">Ação</button>
+                    <a style="margin-left: 275px;" class="btn btn_estilo tl" href="/planners">Voltar</a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5" style="margin-bottom: 10px;">
+                    <h1 class="text_grey" style="margin-left: -15px;">Cliente</h1>
+                </div>
+                <div class="col-7" style="margin-bottom: 10px;">
+                    <h1 class="text_grey">Últimos 12 meses</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-5" style="box-shadow: 0px 0px 0px 1px rgba(95, 187, 172,.5); border-radius: 5px;">
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="text_label">Segmento</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="text_label">Sub-segmento</p> 
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: -15px;">
+                        <div class="col-6">
+                            <p>{{cliente.segmento_descricao}}</p>
+                        </div>
+                        <div class="col-6">
+                            {% if cliente.subsegmento_descricao != None %}
+                                <p>{{cliente.subsegmento_descricao}}</p>
+                            {% else %}
+                                <p>Não informado</p>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <p class="text_label">Telefone</p>
+                        </div>
+                        <div class="col-4">
+                            <p class="text_label">Contato</p> 
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: -15px;">
+                        <div class="col-6">
+                            <p>{{cliente.fone}}</p>
+                        </div>
+                        <div class="col-6">
+                            <p>{{current_user.nome}}</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <p class="text_label">Situação do Cliente</p>
+                            <p style="margin-top: -15px;">Não existente</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="box-shadow: 0px 0px 0px 1px rgba(95, 187, 172,.5); border-radius: 5px; width: 610px; margin-left: 20px;">
+                    <div class="row">
+    
+                    </div>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 65px;">
+                <div class="col-6 text_grey_detalhes">
+                    {% if ultimosPedidos %}
+                        <h1 style="margin-left: -15px;">Últimos Pedidos</h1>
+                        <h2 style="margin-top: 20px;">Material</h2>
+                        <div class="col-7" style="margin-bottom: 20px; margin-left: -25px;">                    
+                            <select name="selecionar_material" class="form-control" style="border-radius: 10px;">
+                                <option></option>
+                                {% for mat in selectMateriais %}                                
+                                <option value="{{mat.material}}">{{mat.material}}</option>
+                                {% endfor %}
+
+                            </select>
+                        </div>
+                        <table class="table" style="border-radius: 10px; box-shadow: 0px 0px 3px rgba(0,0,0,.3); width: 550px; margin-left: -15px;">
+                            <thead class="lista_usuario">
+                                <tr>
+                                    <th class="text_label">Data Pedido</th>
+                                    <th class="text_label">OP</th>
+                                    <th class="text_label">Item</th>
+                                    <th class="text_label">Comp</th>
+                                    <th class="text_label">Largura</th>
+                                    <th class="text_label">Forma Pgto.</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                {% for pedidos in ultimosPedidos %}
+                                <tr>
+                                    <td class="text_label">{{pedidos.data.strftime('%d/%m/%Y')}}</td>
+                                    <td class="text_label">{{pedidos.op}}</td>
+                                    <td class="text_label">{{pedidos.material}}</td>
+                                    <td class="text_label">{{pedidos.comprimento}}</td>
+                                    <td class="text_label">{{pedidos.largura}}</td>
+                                    <td class="text_label">-</td>
+                                </tr>
+                                {% endfor %} 
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p style="font-style: italic; text-align: center; margin-top: 30px;">Sem registro de pedidos...</p>
+                    {% endif %}
+                </div>
+                <div class="col-5 text_grey_detalhes text_filtro" style="margin-bottom: 10px; margin-left: 35px;">
+                    <h1 >Histórico de Iterações</h1>
+                    <p style="margin-top: 20px;">Filtro por Ação</p>
+                    <img style="width: 30px; cursor: pointer;" src="../../static/icons/phone-call.png">
+                    <img style="width: 30px; cursor: pointer;" src="../../static/icons/email.png">                      
+                    <img style="width: 30px; cursor: pointer;" src="../../static/icons/exchange.png"> 
+                    <img style="width: 30px; cursor: pointer;" src="../../static/icons/right-arrow.png">
+                
+                    <div class="row" style="margin-top: 50px; width: 510px;">
+                        <div class="col-2" style="margin-top: 5px;">
+                            <p>05/06/2020</p>
+                        </div>
+                        <div class="col-2">
+                            <img style="width: 30px; margin-left: 15px;" src="../../static/icons/right-arrow.png">
+                            <div class="linha_vertical_filtro"></div>
+                        </div>
+                        <div class="col-8" style="box-shadow: 0px 0px 0px 1px rgba(95, 187, 172,.5); border-radius: 5px;">
+                            <p class="text_filtro">Nome de quem fez Contato</p>
+                            <p class="text_filtro">Aqui vai alguma descrição bem bacana.</p>
+                        </div>
+                    </div>
+
+                    <div class="row" style="width: 510px; margin-top: 15px;">
+                        <div class="col-2" style="margin-top: 5px;">
+                            <p>20/05/2020</p>
+                        </div>
+                        <div class="col-2">
+                            <img style="width: 30px; margin-left: 15px;" src="../../static/icons/phone-call.png">
+                            <div class="linha_vertical_filtro"></div>
+                        </div>
+                        <div class="col-8" style="box-shadow: 0px 0px 0px 1px rgba(95, 187, 172,.5); border-radius: 5px;">
+                            <p class="text_filtro">Nome de quem fez Contato</p>
+                            <p class="text_filtro">Aqui vai alguma descrição bem bacana.</p>
+                        </div>
+                    </div>
+
+                    <div class="row" style="width: 510px; margin-top: 15px;">
+                        <div class="col-2" style="margin-top: 5px;">
+                            <p>20/04/2020</p>
+                        </div>
+                        <div class="col-2">
+                            <img style="width: 30px; margin-left: 15px;" src="../../static/icons/exchange.png">
+                            <div class="linha_vertical_filtro"></div>
+                        </div>
+                        <div class="col-8" style="box-shadow: 0px 0px 0px 1px rgba(95, 187, 172,.5); border-radius: 5px;">
+                            <p class="text_filtro">Nome de quem fez Contato</p>
+                            <p class="text_filtro">Aqui vai alguma descrição bem bacana.</p>
+                        </div>
+                    </div>
+
+                    <div class="row" style="width: 510px; margin-top: 15px;">
+                        <div class="col-2" style="margin-top: 5px;">
+                            <p>20/03/2020</p>
+                        </div>
+                        <div class="col-2">
+                            <img style="width: 30px; margin-left: 15px;" src="../../static/icons/email.png">
+                        </div>
+                        <div class="col-8" style="box-shadow: 0px 0px 0px 1px rgba(95, 187, 172,.5); border-radius: 5px;">
+                            <p class="text_filtro">Nome de quem fez Contato</p>
+                            <p class="text_filtro">Aqui vai alguma descrição bem bacana.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <h1 class="text_grey">Ação</h1>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text_filtro">Ação</p>                  
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6" style="margin-bottom: 20px;">                    
+                    <select class="form-control borda-input" style="border-radius: 10px;">
+                        <option>--</option>                                
+                        <option>--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <p class="text_filtro">Complemento</p>                  
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <textarea name="" id="" cols="103" rows="5" style="border-radius: 10px;"></textarea>                 
+                </div>
+            </div>
+            <div class="col-12" style="margin-top: 25px; text-align: right;">
+                <button style="margin: 15px 10px 25px 0;" type="button" class="btn btn_estilo">Salvar</button>
+                <button style="margin: 15px 20px 25px 0;" class="btn btn_estilo" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

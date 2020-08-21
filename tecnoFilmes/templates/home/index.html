@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<style>
+    a {
+        position: relative;
+    }
+
+    .descricao {
+        position: absolute;
+        color: #DDD; 
+        left: 270px; 
+        bottom: -110px;
+    }
+
+    .position a{
+        text-decoration: none;
+    }
+</style>
+<p class="text_grey">Home</p>
+<div >
+    <hr style="border: 3px solid #5FBBAC;">
+</div>
+
+<div class="position">
+    <a href="{{url_for('homes.diretoria')}}" >
+        <img class="img_home" src="../static/imagens/diretoria.jpg">
+        <p class="descricao">Diretoria</p>
+    </a>
+    <a href="{{url_for('homes.comercial')}}">
+        <img class="img_home" src="../static/imagens/comercial.jpg">
+        <p class="descricao">Comercial</p>
+    </a>
+    <a href="{{url_for('homes.pcp')}}">
+        <img class="img_home" src="../static/imagens/pcp.jpg">
+        <p class="descricao" style="margin-left: 30px;">PCP</p>
+    </a> 
+</div>
+    
+
+{% endblock %}

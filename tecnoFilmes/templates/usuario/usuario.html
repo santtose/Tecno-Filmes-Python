@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<p class="text_grey">Usuário</p>
+
+<a class="btn btn_estilo" href="{{url_for('users.cadastrar')}}">NOVO</a>
+
+<form action="/consulta" method="POST" name="frm_consulta" class="ml-3" id="consulta">
+    <div class="form-group">
+        <div class="">
+            <label class="text_label" for="">Pesquisa</label>
+            <input class="col-md-3 inputBox" type="text" name="consulta" placeholder="Digite o nome do usuário:">        
+            <button type="submit" class="btn btn_estilo" style="margin-left: 5px; margin-top: -5px;">Buscar</button>
+        </div>
+    </div>
+    
+</form>
+
+<table class="table" style="margin-top: 70px;">
+    <thead class="lista_usuario">
+        <tr>
+            <th class="text_label">Login</th>
+            <th class="text_label">Nome</th>
+            <th class="text_label">CPF</th>
+            <th class="text_label">Tipo Usuário</th>
+            <th class="text_label">Ações</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for usuario in usuarios %}
+        <tr>
+            <td>{{usuario.login}}</td>
+            <td>{{usuario.nome}}</td>
+            <td>{{usuario.cpf}}</td>
+            <td>{{usuario.tp_usuario}}</td>
+            <td>
+                <a href="/deletar/{{usuario.id}}">
+                    <img style="width: 25px; margin-right: 10px;" src="../static/icons/delete.png" title="Excluir">
+                </a>
+                <a href="/editar/{{usuario.id}}">
+                    <img style="width: 25px;" src="../static/icons/edit.png" title="Editar">
+                </a>
+            </td>
+        </tr>
+       {% endfor %} 
+    </tbody>
+
+    <tfoot>
+        <tr class="lista_usuario">
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+
+{% endblock %}

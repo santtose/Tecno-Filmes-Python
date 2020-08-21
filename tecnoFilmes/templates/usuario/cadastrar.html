@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% block content %}
+<p class="text_grey">Cadastro de Usuários</p>
+{% for mess in get_flashed_messages()  %}
+    <div class="alert alert-danger" role="alert">
+        {{mess}}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+{% endfor %}
+<form method="POST" autocomplete="off">
+    <div class="col-md-12" style="text-align: right;">
+        <div class="form-group">
+            {{ form.is_ativo(checked="checked")}}
+            {{ form.is_ativo.label(class='form-control-label text_label') }}        
+        </div>
+    </div>
+    
+    <div class="row">
+                
+        <div class="col-md-3">
+            {{ form.hidden_tag() }}
+            <div class="form-group inputBox">
+                {{ form.nome.label(class='form-control-label text_label') }}
+                {{ form.nome(class="form-control", required="") }}
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                {{ form.cpf.label(class='form-control-label text_label') }}
+                {{ form.cpf(class="form-control", required="", maxlength="14") }}
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                {{ form.email.label(class='form-control-label text_label') }}
+                {{ form.email(class="form-control", required="", type="email") }}
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                {{ form.celular.label(class='form-control-label text_label') }}
+                {{ form.celular(class="form-control", required="")}}
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                {{ form.telefone.label(class='form-control-label text_label') }}
+                {{ form.telefone(class="form-control") }}
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                {{ form.login.label(class='form-control-label text_label') }}
+                {{ form.login(class="form-control", required="") }}
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                {{ form.password.label(class='form-control-label text_label') }}
+                {{ form.password(class="form-control", required="") }}
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group inputBox">
+                {{ form.pass_confirm.label(class='form-control-label text_label') }}
+                {{ form.pass_confirm(class="form-control", required="") }}
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="radio" id="diretoria" name="tp_usuario" value="diretoria">
+                <label class="text_label" for="diretoria">Diretoria</label>
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="radio" id="comercial" name="tp_usuario" value="comercial">
+                <label class="text_label" for="comercial">Comercial</label>
+            </div>
+        </div>
+    
+        <div class="col-md-3">
+            <div class="form-group">
+                <input type="radio" id="pcp" name="tp_usuario" value="pcp">
+                <label class="text_label" for="pcp">PCP</label>
+            </div>
+        </div>
+    
+        <div class="col-md-3"></div>
+    
+        <div class="col-md-3" style="margin-top: 20px; margin-left: -45px;">
+            <a style="margin-left: 920px; margin-bottom: -48px;" class="btn btn_estilo" href="{{url_for('users.usuario')}}">VOLTAR</a>
+                       
+            {{ form.submit(class='btn btn_estilo')}}
+        </div>
+    </div>
+</form>
+<script>
+    $('#cpf').mask('000.000.000-00');
+    $('#celular').mask('(99)99999-9999');
+    $('#telefone').mask('(99)9999-9999');
+</script>
+
+{% endblock %}

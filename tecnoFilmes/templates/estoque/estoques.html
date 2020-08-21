@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<style>
+
+    .barra_rolagem {
+
+        overflow: auto;
+        height: 310px; 
+        width: 100%;
+
+    }
+
+</style>
+
+    <div class="row" style="margin-top: 25px;">  
+        <div>
+            <a href="{{url_for('pedidos.pedidos')}}">
+                <img style="width: 25px; margin-left: 1070px; color: #5FBBAC;" src="../../static/icons/de-volta.png" title="Voltar">
+            </a> 
+            <h1 style="margin-left: 15px; margin-top: -20px; margin-bottom: 30px;" class="text_grey">Estoque</h1>   
+        </div>
+    
+        <div style="margin-top: 20px;" class="col-md-12"></div>        
+       
+        <div class="col-md-12 barra_rolagem">               
+            <table class="table tabela">
+                <thead class="lista_usuario">
+                    <tr class="text_format">
+                        <th>Código</th>                     
+                        <th>Versão</th>                     
+                        <th>Largura</th>                     
+                        <th>Item</th>                     
+                        <th>Data</th>                     
+                        <th>Quantidade</th>                     
+                        <th>Metros</th>                     
+                        <th>Endereço</th>                     
+                        <th>Area</th>                     
+                        <th>Código de Barras</th>                     
+                    </tr>
+                </thead>
+        
+                <tbody>
+                    {% for estoque in estoques %}
+                    <tr>
+                        <td>{{ estoque.codigo_item }}</td>
+                        <td>{{ estoque.versao }}</td>
+                        <td>{{ estoque.largura }}</td>
+                        <td>{{ estoque.item }}</td>
+                        <td>{{ estoque.data }}</td>
+                        <td>{{ estoque.quantidade }}</td>
+                        <td>{{ estoque.metros }}</td>
+                        <td>{{ estoque.endereco }}</td>
+                        <td>{{ estoque.area }}</td>
+                        <td>{{ estoque.cod_barra }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>    
+    </div>
+
+    <script>
+        
+    </script>
+
+{% endblock %}

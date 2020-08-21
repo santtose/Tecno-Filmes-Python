@@ -1,0 +1,8 @@
+**Atualizar o banco**
+
+flask db migrate - ou - flask db migrate -m "descrição"
+flask db upgrade
+
+*Nota
+- flask db.init se usa apenas quando cria as tabelas pela primeira vez, se usar após ter criado
+e tiver dados no banco, ele irá deletar tudo que tinha no banco e criar tudo de novo.
