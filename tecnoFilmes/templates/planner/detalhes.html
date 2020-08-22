@@ -271,10 +271,10 @@
                 </div>
                 <div class="row">
                     <div class="col-6" style="margin-bottom: 20px;">                    
-                        <select class="form-control borda-input" style="border-radius: 10px;">
+                        <select class="form-control borda-input" name="acao" style="border-radius: 10px;">
                             <option selected disabled>Selecione...</option>
                             {% for acao in selectAcao %}                               
-                                <option class="texto">{{acao.descricao}}</option>
+                                <option class="texto" value="{{acao.id}}">{{acao.descricao}}</option>
                             {% endfor %}
                         </select>
                     </div>
