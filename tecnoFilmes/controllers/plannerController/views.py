@@ -6,6 +6,7 @@ from tecnoFilmes.models.tables import Cliente
 from tecnoFilmes.models.tables import Pedido
 from tecnoFilmes.models.tables import Atividade
 from tecnoFilmes.models.tables import User
+from tecnoFilmes.models.tables import Acao
 from tecnoFilmes.algoritmos.query import *
 from tecnoFilmes.algoritmos.connection import connection
 from tecnoFilmes import db
@@ -69,11 +70,14 @@ def detalhes(id=0):
                         .order_by(Pedido.data.desc()) \
                         .all()
 
+    selectAcao = Acao.query.all()
+        
+    botaAcao = Atividade.query.join(Cliente, Cliente.codigo == Atividade.cliente_id) \
+            .filter(Cliente.id == id)
+
     return render_template('planner/detalhes.html', cliente=cliente,
                                                     ultimosPedidos=ultimosPedidos,
                                                     selectMateriais=selectMateriais,
+                                                    selectAcao=selectAcao,
+                                                    botaoAcao=botaAcao,
                                                     title='Detalhes Cliente')
-
-@planner.route('/acao/<int:codigo>')
-def acao(codigo=0):
-    atividade = Atividade.query.filter_by(cliente_id=codigo).first()

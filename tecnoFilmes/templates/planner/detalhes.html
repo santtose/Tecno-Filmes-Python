@@ -67,7 +67,12 @@
                     <h1 style="margin-left: -15px;" class="text_grey">{{cliente.nome.lower().capitalize()}}</h1>
                 </div>
                 <div class="col-3" style="margin-top: 20px;">
-                    <button style="margin-left: 200px; margin-bottom: -48px;" type="button" class="btn btn_estilo" data-toggle="modal" data-target=".bd-example-modal-lg">Ação</button>
+                    <button style="margin-left: 200px; margin-bottom: -48px;" 
+                            type="button" 
+                            class="btn btn_estilo" 
+                            data-toggle="modal" 
+                            data-target=".bd-example-modal-lg">Ação
+                    </button>
                     <a style="margin-left: 275px;" class="btn btn_estilo tl" href="/planners">Voltar</a>
                 </div>
             </div>
@@ -244,39 +249,55 @@
     </div>
 </div>
 
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <h1 class="text_grey">Ação</h1>
-            <div class="row">
-                <div class="col-12">
-                    <p class="text_filtro">Ação</p>                  
+<form method="POST">
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <h1 class="text_grey">Ação</h1>
+                <div class="row">
+                    <div class="col-12">
+                        <p class="text_filtro">Ação</p>                  
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-6" style="margin-bottom: 20px;">                    
-                    <select class="form-control borda-input" style="border-radius: 10px;">
-                        <option>--</option>                                
-                        <option>--</option>
-                    </select>
+                <div class="row">
+                    <div class="col-6" style="margin-bottom: 20px;">                    
+                        <select class="form-control borda-input" style="border-radius: 10px;">
+                            <option selected disabled>Selecione...</option>
+                            {% for acao in selectAcao %}                               
+                                <option>{{acao.descricao}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <p class="text_filtro">Complemento</p>                  
+                <div class="row">
+                    <div class="col-12">
+                        <p class="text_filtro">Complemento</p>                  
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <textarea name="" id="" cols="103" rows="5" style="border-radius: 10px;"></textarea>                 
+                <div class="row">
+                    <div class="col-12">
+                        <textarea name="" id="" cols="103" rows="5" style="border-radius: 10px;"></textarea>                 
+                    </div>
                 </div>
-            </div>
-            <div class="col-12" style="margin-top: 25px; text-align: right;">
-                <button style="margin: 15px 10px 25px 0;" type="button" class="btn btn_estilo">Salvar</button>
-                <button style="margin: 15px 20px 25px 0;" class="btn btn_estilo" data-dismiss="modal">Fechar</button>
+                <div class="col-12" style="margin-top: 25px; text-align: right;">
+                    <button style="margin: 15px 10px 25px 0;" type="button" class="btn btn_estilo">Salvar</button>
+                    <button style="margin: 15px 20px 25px 0;" class="btn btn_estilo" data-dismiss="modal">Fechar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
+
+<!-- <script>
+    function testando(){
+        $.ajax({
+            type: 'GET',
+            url: '/acao',
+            success: function(html){
+                $('#mostra-modal').html(html);
+            }
+        });
+    }
+</script> -->
 
 {% endblock %}
